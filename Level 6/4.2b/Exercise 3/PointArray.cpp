@@ -1,0 +1,69 @@
+#define PointArray_cpp
+#include "PointArray.hpp"
+#include <iostream>
+#include <cmath>
+
+using namespace suman::CAD;
+using namespace std;
+
+namespace suman
+{
+    namespace Containers
+    {
+        // Default Constructor -> Call Array<Point> default constructor
+        PointArray::PointArray() : Array<Point>()
+        {
+            // cout << "PointArray default constructor" << endl;
+        }
+
+        // Parameterized Constructor -> Call Array<Point> parameterized constructor
+        PointArray::PointArray(int size) : Array<Point>(size)
+        {
+            // cout << "PointArray parameterized constructor" << endl;
+        }
+
+        // Copy Constructor -> Call Array<Point> copy constructor
+        PointArray::PointArray(const PointArray &source) : Array<Point>(source)
+        {
+            // cout << "PointArray copy constructor" << endl;
+        }
+        
+        // Destructor
+        PointArray::~PointArray()
+        {
+            // cout << "PointArray destructor" << endl;
+        }
+
+        // Assignment Operator -> Use base class assignment operator
+        PointArray &PointArray::operator=(const PointArray &source)
+        {
+            // Use the base class assignment operator for deep copy and size handling
+            Array<Point>::operator=(source); 
+            // cout << "PointArray assignment operator" << endl;
+            return *this;
+        }
+
+        // Length() Function
+        double PointArray::Length() const
+        {
+            double total_l = 0.0;
+            int size = this->Size(); // Use inherited Size() method
+
+            // Need at least 2 points
+            if (size <= 1) {
+                return 0.0;
+            }
+
+            for (int i = 0; i < size - 1; ++i) {
+                // Get the current point and the next point
+                Point p1 = (*this)[i];
+                Point p2 = (*this)[i+1];
+                
+                // Calculate distance between p1 and p2 and add
+                total_l += p1.Distance(p2);
+            }
+            
+            return total_l;
+        }
+    }
+}
